@@ -20,7 +20,7 @@ gestor_jobs.py -> Job de Kubernetes -> Pod -> contenedor con argumentos -> logs
 
 ## Demo
 
-📹 Video de YouTube: _Completar con el link_
+📹 Video de YouTube:  [Link](https://www.youtube.com/watch?v=lHm73RYs5oA)
 
 ## Estructura del repositorio
 
