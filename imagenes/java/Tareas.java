@@ -20,7 +20,7 @@ public class Tareas {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.err.println("Uso: <hola|ordenar|fib|matriz> <N>");
+            System.err.println("Uso: <hola|ordenar|fib|matriz|contar_primos> <N>");
             System.exit(2);
         }
 
@@ -79,6 +79,21 @@ public class Tareas {
                 double traza = 0;
                 for (int i = 0; i < n; i++) traza += c[i][i];
                 extra = String.format("\"n\":%d,\"traza\":%.6f", n, traza);
+            }
+            case "contar_primos" -> {
+                System.out.printf("Contando primos hasta %d...%n", n);
+                long count = 0;
+                for (int i = 2; i <= n; i++) {
+                    boolean esPrimo = true;
+                    for (int j = 2; j * j <= i; j++) {
+                        if (i % j == 0) {
+                            esPrimo = false;
+                            break;
+                        }
+                    }
+                    if (esPrimo) count++;
+                }
+                extra = String.format("\"n\":%d,\"cantidad_primos\":%d", n, count);
             }
             default -> {
                 System.err.println("Tarea desconocida: " + tarea);

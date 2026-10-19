@@ -26,9 +26,24 @@ static long long fib_rec(int k) {
     return k < 2 ? k : fib_rec(k - 1) + fib_rec(k - 2);
 }
 
+static long long contar_primos(long n) {
+    long count = 0;
+    for (long num = 2; num <= n; num++) {
+        int es_primo = 1;
+        for (long i = 2; i * i <= num; i++) {
+            if (num % i == 0) {
+                es_primo = 0;
+                break;
+            }
+        }
+        if (es_primo) count++;
+    }
+    return count;
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        fprintf(stderr, "Uso: <hola|ordenar|fib|matriz> <N>\n");
+        fprintf(stderr, "Uso: <hola|ordenar|fib|matriz|contar_primos> <N>\n");
         return 2;
     }
 
@@ -89,6 +104,10 @@ int main(int argc, char *argv[]) {
         snprintf(extra, sizeof(extra), "\"n\":%ld,\"traza\":%.6f", n, traza);
         free(a); free(b); free(c);
 
+
+    } else if (strcmp(tarea, "contar_primos") == 0) {
+        long long count = contar_primos(n);
+        snprintf(extra, sizeof(extra), "\"n\":%ld,\"cantidad_primos\":%lld", n, count);
     } else {
         fprintf(stderr, "Tarea desconocida: %s\n", tarea);
         return 2;

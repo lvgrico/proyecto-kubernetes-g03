@@ -56,12 +56,21 @@ def matriz(n):
             print(f"  fila {i}/{n}")
     return {"n": n, "traza": round(sum(c[i][i] for i in range(n)), 6)}
 
+def contar_primos(n):
+    print(f"Contando primos hasta {n}...")
+    primos = []
+    for num in range(2, n + 1):
+        es_primo = all(num % p != 0 for p in primos if p * p <= num)
+        if es_primo:
+            primos.append(num)
+    return {"n": n, "cantidad_primos": len(primos), "ultimo_primo": primos[-1] if primos else None}
 
 TAREAS = {
     "hola": hola,
     "ordenar": ordenar,
     "fib": fib,
     "matriz": matriz,
+    "contar_primos": contar_primos,
 }
 
 

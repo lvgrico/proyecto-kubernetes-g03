@@ -65,9 +65,10 @@ TAMANOS = {
     "ordenar": {"baja": 100000, "media": 1000000, "alta": 3000000},
     "fib": {"baja": 25, "media": 30, "alta": 35},
     "matriz": {"baja": 60, "media": 120, "alta": 250},
+    "contar_primos": {"baja": 10000, "media": 100000, "alta": 1000000},
 }
 
-
+    
 def cargar_catalogo():
     """Devuelve el contenido de catalogo/tareas.json como diccionario."""
     with CATALOGO.open(encoding="utf-8") as archivo:
