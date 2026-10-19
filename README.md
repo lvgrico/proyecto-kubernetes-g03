@@ -14,7 +14,9 @@ gestor_jobs.py -> Job de Kubernetes -> Pod -> contenedor con argumentos -> logs
 
 | Nombre | Código |
 |---|---|
-| _Completar_ | _Completar_ |
+| Paulina Valencia| 200167925 |
+| Laura Gonzalez | 200195919 |
+| Carlos Morales | 200190657 |
 
 ## Demo
 
@@ -52,6 +54,26 @@ Si se modifica el programa de un contenedor hay que volver a ejecutar
 `preparar-imagenes.ps1` (construye contra el Docker de Minikube; `minikube image load`
 no reemplaza un tag existente).
 
+## Uso
+
+El programa se ejecuta sin argumentos y muestra un menú:
+
+```text
+=== Gestor de Jobs - namespace estudiantes-202630 ===
+  1. Ejecutar una tarea nueva
+  2. Revisar el estado de las tareas
+  3. Ver los logs de una tarea
+  4. Limpiar las tareas terminadas
+  5. Salir
+```
+
+- **Opción 1:** pide lenguaje, tarea y complejidad. El menú de complejidad muestra el N y la
+  memoria de cada nivel. Al terminar imprime el nombre del Job y sus recursos.
+- **Opción 2:** lista los Jobs del namespace con su estado.
+- **Opción 3:** permite elegir un Job y muestra la salida de su contenedor.
+- **Opción 4:** borra los Jobs terminados (completados o fallidos) tras pedir confirmación;
+  no toca los que siguen corriendo.
+  
 ## Implementación
 
 ### Flujo del programa
@@ -67,21 +89,19 @@ no reemplaza un tag existente).
 5. **Limpieza** (`jobs_terminados`, `eliminar_job`): solo se borran Jobs sin Pods activos
    y con al menos un Pod correcto o fallido, con `propagation_policy="Background"`.
 
-### Decisiones sobre el Job
-
-| Campo | Valor | Por qué |
-|---|---|---|
-| `backoff_limit` | `0` | _Completar con la explicación del grupo_ |
-| `restart_policy` | `Never` | _Completar_ |
-| `image_pull_policy` | `Never` | _Completar_ |
-| `resources.requests` / `limits` | según `NIVELES` | _Completar_ |
-
 ### Tarea adicional
 
-_Completar: nombre de la tarea, lenguaje elegido, cambios en el contenedor, en
-`catalogo/tareas.json` y en `TAMANOS`._
+Cuenta cuántos números primos existen hasta N. Se implementó en los tres lenguajes
+(Python, Java y C) con el mismo contrato que las demás tareas: recibe `contar_primos <N>`,
+escribe logs en stdout y cierra con un JSON de una línea que incluye `cantidad_primos`.
+Por ejemplo, para N=100000 el resultado es 9592, que es el valor matemáticamente correcto.
 
-### Pruebas realizadas
+Cambios realizados:
 
-_Completar: capturas o salidas de `kubectl get jobs,pods -n estudiantes-202630`, la
-comparación de `hola` entre lenguajes y la prueba de `OOMKilled`._
+- **Contenedores:** se agregó la tarea en el programa de `imagenes/python/`,
+  `imagenes/java/` y `imagenes/c/`, y se reconstruyeron las imágenes con
+  `preparar-imagenes.ps1`.
+- **`catalogo/tareas.json`:** se añadió `contar_primos` a la lista de tareas de cada lenguaje.
+- **`TAMANOS` en `gestor_jobs.py`:** se añadió la fila
+  `"contar_primos": {"baja": 10000, "media": 100000, "alta": 1000000}`.
+
